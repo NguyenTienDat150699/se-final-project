@@ -5,20 +5,111 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             MinHeight="250" MinWidth="700" MaxWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="41,29,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <ComboBox HorizontalAlignment="Left" Margin="248,30,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="450,29,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <DataGrid HorizontalAlignment="Left" Height="133" Margin="41,132,0,0" VerticalAlignment="Top" Width="529">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="DANH SÁCH MÔN HỌC MỞ" VerticalAlignment="Center" FontSize="24" Height="Auto"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="225"/>
+                <ColumnDefinition Width="230"/>
+            </Grid.ColumnDefinitions>
+            <DockPanel>
+                <StackPanel>
+                    <TextBlock Text="Mã Danh Sách"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel Grid.Column="1">
+                <StackPanel>
+                    <TextBlock Text="Học Kỳ"/>
+                </StackPanel>
+                <StackPanel>
+                    <ComboBox/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel Grid.Column="2">
+                <StackPanel>
+                    <TextBlock Text="Năm Học"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+        <DataGrid Grid.Row="2" Margin="10,0">
             <DataGrid.Columns>
-                <DataGridComboBoxColumn Header="MonHoc"/>
-                <DataGridComboBoxColumn Header="LoaiMon" IsReadOnly="True"/>
-                <DataGridTextColumn Header="TinChi" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Môn Học">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox></ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridComboBoxColumn Header="Loại Môn Học"/>
+                <DataGridTextColumn Header="Tín Chỉ"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="280,317,0,0" VerticalAlignment="Top" Width="116" Height="42"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="437,317,0,0" VerticalAlignment="Top" Width="116" Height="42"/>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Xác Nhận" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Nhập Lại" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
 
     </Grid>
 </UserControl>
