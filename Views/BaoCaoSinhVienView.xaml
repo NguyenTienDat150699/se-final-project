@@ -6,17 +6,84 @@
              xmlns:local="clr-namespace:Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <ComboBox HorizontalAlignment="Left" Margin="100,38,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="315,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <DataGrid HorizontalAlignment="Left" Height="165" Margin="42,127,0,0" VerticalAlignment="Top" Width="515" IsReadOnly="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel>
+            <StackPanel>
+                <TextBlock Text="Học Kỳ"/>
+            </StackPanel>
+            <StackPanel>
+                <ComboBox/>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="1">
+            <StackPanel>
+                <TextBlock Text="Năm Học"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox/>
+            </StackPanel>
+        </DockPanel>
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0,10,10" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="MSSV"/>
-                <DataGridTextColumn Header="SoTienDangKy"/>
-                <DataGridTextColumn Header="SoTienPhaiDong"/>
-                <DataGridTextColumn Header="SoTienConLai"/>
+                <DataGridTextColumn Header="Mã Số Sinh Viên"/>
+                <DataGridTextColumn Header="Họ Tên Sinh Viên"/>
+                <DataGridTextColumn Header="Số Tiền Đăng Ký"/>
+                <DataGridTextColumn Header="Số Tiền Phải Đóng"/>
+                <DataGridTextColumn Header="Số Tiền Còn Lại"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="226,327,0,0" VerticalAlignment="Top" Width="110" Height="35"/>
+        <TextBlock Margin="0" Grid.Row="1" TextWrapping="Wrap" Grid.ColumnSpan="2" Height="Auto" FontSize="24" HorizontalAlignment="Center"><Run Text="DANH SÁCH SINH VIÊN CHƯA HOÀN THÀNH "/><Run Text="HỌC "/><Run Text="PHÍ"/><LineBreak/><Run/></TextBlock>
     </Grid>
 </UserControl>
