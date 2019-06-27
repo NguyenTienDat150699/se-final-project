@@ -12,9 +12,13 @@ namespace Models
         {
             NgayLap = DateTime.Today;
             ThoiHangDongHP = DateTime.Today;
+            SoTienConLai = 0;
+            SoTienDangKy = 0;
+            SoTienPhaiDong = 0;
         }
         public int SoPhieuDKHP { get; set; }
         public DateTime NgayLap { get; set; }
+        public int HocKy { get; set; }
         public int NamHoc { get; set; }
         public int MaSoSV { get; set; }
         public double SoTienDangKy { get; set; }

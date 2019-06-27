@@ -11,6 +11,7 @@ namespace Models
         public PhieuThuHP()
         {
             NgayLap = DateTime.Today;
+            SoTienThu = 0;
         }
         public int SoPhieuThuHP { get; set; }
         public int PhieuDKHP { get; set; }

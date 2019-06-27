@@ -8,6 +8,11 @@ namespace Models
 {
     public class QuanHuyen
     {
+        public QuanHuyen()
+        {
+            TenQuanHuyen = "";
+            ThongTin = "";
+        }
         public int MaQuanHuyen { get; set; }
         public int TinhThanh { get; set; }
         public string TenQuanHuyen { get; set; }

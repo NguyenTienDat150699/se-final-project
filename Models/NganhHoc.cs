@@ -8,6 +8,10 @@ namespace Models
 {
     public class NganhHoc
     {
+        public NganhHoc()
+        {
+            TenNganhHoc = "";
+        }
         public int MaNganhHoc { get; set; }
         public int Khoa { get; set; }
         public string TenNganhHoc { get; set; }

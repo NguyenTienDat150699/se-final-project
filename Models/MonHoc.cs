@@ -8,6 +8,10 @@ namespace Models
 {
     public class MonHoc
     {
+        public MonHoc()
+        {
+            TenMonHoc = "";
+        }
         public int MaMonHoc { get; set; }
         public string TenMonHoc { get; set; }
         public int LoaiMon { get; set; }
