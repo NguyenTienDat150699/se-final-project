@@ -55,6 +55,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BaoCaoSinhVienView.xaml.cs">
+      <DependentUpon>BaoCaoSinhVienView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChuongTrinhHocView.xaml.cs">
+      <DependentUpon>ChuongTrinhHocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MonHocMoView.xaml.cs">
+      <DependentUpon>MonHocMoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MonHocView.xaml.cs">
+      <DependentUpon>MonHocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PhieuDKHPView.xaml.cs">
+      <DependentUpon>PhieuDKHPView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PhieuThuHPView.xaml.cs">
+      <DependentUpon>PhieuThuHPView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SinhVienView.xaml.cs">
+      <DependentUpon>SinhVienView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="BaoCaoSinhVienView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChuongTrinhHocView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +96,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MonHocMoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MonHocView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PhieuDKHPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PhieuThuHPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SinhVienView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
