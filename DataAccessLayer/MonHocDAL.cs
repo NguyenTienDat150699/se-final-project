@@ -96,5 +96,29 @@ namespace DataAccessLayer
                 connection.Close();
             }
         }
+
+        public bool IsMaSoExisted(int maMonHoc)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                OleDbCommand command = new OleDbCommand(
+                    "SELECT COUNT(MaMonHoc) FROM MON_HOC WHERE MaMonHoc=@maso", connection);
+                command.Parameters.Add("@maso", OleDbType.Numeric).Value = maMonHoc;
+                OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
+                oleDbDataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return int.Parse(dataTable.Rows[0][0].ToString()) == 0 ? false : true;
+        }
     }
 }
