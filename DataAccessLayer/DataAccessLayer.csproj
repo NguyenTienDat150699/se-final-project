@@ -41,7 +41,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CT_ChuongTrinhHocDAL.cs" />
+    <Compile Include="CT_PhieuDKHP_DAL.cs" />
+    <Compile Include="DoiTuongUuTienDAL.cs" />
+    <Compile Include="DsMonHocMoDAL.cs" />
+    <Compile Include="HocKyDAL.cs" />
+    <Compile Include="KhoaDAL.cs" />
+    <Compile Include="LoaiMonDAL.cs" />
+    <Compile Include="MonHocDAL.cs" />
+    <Compile Include="MonHocMoDAL.cs" />
+    <Compile Include="NganhHocDAL.cs" />
+    <Compile Include="PhieuDKHP_DAL.cs" />
+    <Compile Include="PhieuThuHP_DAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanHuyenDAL.cs" />
+    <Compile Include="SinhVienDAL.cs" />
+    <Compile Include="TinhThanhDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{a16af297-64a5-4113-80d1-61b9a3eb56dc}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{bd8dca73-5129-46d5-aaee-1bb3e4d03d46}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

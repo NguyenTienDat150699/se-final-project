@@ -41,7 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CT_ChuongTrinhHoc.cs" />
+    <Compile Include="CT_PhieuDKHP.cs" />
+    <Compile Include="DoiTuongUuTien.cs" />
+    <Compile Include="DsMonHocMo.cs" />
+    <Compile Include="HocKy.cs" />
+    <Compile Include="Khoa.cs" />
+    <Compile Include="LoaiMon.cs" />
+    <Compile Include="MonHoc.cs" />
+    <Compile Include="MonHocMo.cs" />
+    <Compile Include="NganhHoc.cs" />
+    <Compile Include="PhieuDKHP.cs" />
+    <Compile Include="PhieuThuHP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanHuyen.cs" />
+    <Compile Include="SinhVien.cs" />
+    <Compile Include="TinhThanh.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
