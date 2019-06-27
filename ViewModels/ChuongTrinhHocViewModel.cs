@@ -28,6 +28,7 @@ namespace ViewModels
                 OnPropertyChanged("NganhHoc");
             }
         }
+        public DataRowView SelectedRow { get; set; }
 
         public ICommand XacNhan { get; set; }
         private void XacNhanLuuChuongTrinhHoc()
@@ -37,6 +38,7 @@ namespace ViewModels
             {
                 errorString = "\nNgành Học không hợp lệ";
                 MessageBox.Show(errorString, "ERROR");
+                return;
             }
 
             NganhHocDAL nganhHocDAL = new NganhHocDAL(dbConnection);
@@ -45,8 +47,13 @@ namespace ViewModels
             {
                 CT_ChuongTrinhHoc cT_ChuongTrinhHoc = new CT_ChuongTrinhHoc();
                 cT_ChuongTrinhHoc.NganhHoc = nganhHoc.MaNganhHoc;
-                cT_ChuongTrinhHoc.MonHoc = int.Parse(row["MonHoc"].ToString());
-                cT_ChuongTrinhHoc.HocKy = int.Parse(row["HocKy"].ToString());
+                int number;
+                if (!int.TryParse(row["HocKy"].ToString(), out number))
+                    throw new Exception();
+                cT_ChuongTrinhHoc.HocKy = number;
+                if (!int.TryParse(row["MonHoc"].ToString(), out number))
+                    continue;
+                cT_ChuongTrinhHoc.MonHoc = number;
                 cT_ChuongTrinhHoc.GhiChu = row["GhiChu"].ToString();
                 cT_ChuongTrinhHocs.Add(cT_ChuongTrinhHoc);
             }
@@ -57,6 +64,8 @@ namespace ViewModels
                 cT_ChuongTrinhHocDAL.DeleteItemsByNganhHoc(nganhHoc.MaNganhHoc);
                 foreach (CT_ChuongTrinhHoc cT_ChuongTrinhHoc in cT_ChuongTrinhHocs)
                     cT_ChuongTrinhHocDAL.CreateItem(cT_ChuongTrinhHoc);
+                if(CT_ChuongTrinhHocs.Rows.Count > cT_ChuongTrinhHocs.Count)
+                    MessageBox.Show("Có những Môn Học chưa đầy đủ thông tin bị bỏ qua", "WARNNING");
                 MessageBox.Show("Lưu Chương Trình Học thành công");
             }
             else
@@ -87,6 +96,28 @@ namespace ViewModels
 
         public ICommand NhapLai { get; set; }
 
+        public ICommand ThemDong { get; set; }
+        private void ThemDongCT_ChuongTrinhHoc()
+        {
+            DataRow dataRow = CT_ChuongTrinhHocs.NewRow();
+            CT_ChuongTrinhHocs.Rows.Add(dataRow);
+        }
+
+        public ICommand SelectedMonHocChanged { get; set; }
+        private void OnSelectedMonHocChanged(object mamonhoc)
+        {
+            if (mamonhoc == null) return;
+            DataRow dataRow = SelectedRow.Row;
+            foreach (MonHoc monHoc in DanhMucMonHoc)
+            {
+                if (monHoc.MaMonHoc != int.Parse(mamonhoc.ToString()))
+                    continue;
+                dataRow["MonHoc"] = mamonhoc;
+                dataRow["LoaiMon"] = monHoc.LoaiMon;
+                dataRow["SoTinChi"] = monHoc.SoTinChi;
+            }
+        }
+
         public ChuongTrinhHocViewModel() : base()
         {
             nganhHoc = new NganhHoc();
@@ -95,6 +126,11 @@ namespace ViewModels
                 param => true, param => XacNhanLuuChuongTrinhHoc());
             NhapLai = new RelayCommand(
                 param => true, param => LoadCT_ChuongTrinhHocs());
+            SelectedMonHocChanged = new RelayCommand(
+                param => true, param => OnSelectedMonHocChanged(param));
+            ThemDong = new RelayCommand(
+                param => CT_ChuongTrinhHocs != null,
+                param => ThemDongCT_ChuongTrinhHoc());
 
             LoadDanhMucKhoa();
             LoadDanhMucNganhHoc();
