@@ -121,7 +121,7 @@ namespace ViewModels
             TinhThanhDAL tinhThanhDAL = new TinhThanhDAL(dbConnection);
             DanhMucTinhThanh = tinhThanhDAL.ReadAllItems();
         }
-        private void LoadDanhMucQuanHuyen()
+        public void LoadDanhMucQuanHuyen()
         {
             QuanHuyenDAL quanHuyenDAL = new QuanHuyenDAL(dbConnection);
             DanhMucQuanHuyen = quanHuyenDAL.ReadItemsByTinhThanh(quanHuyen.TinhThanh);
