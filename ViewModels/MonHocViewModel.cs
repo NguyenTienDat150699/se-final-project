@@ -47,7 +47,6 @@ namespace ViewModels
             {
                 DanhMucMonHoc.Add(monHoc);
                 MonHoc = new MonHoc();
-                LoaiMon = new LoaiMon();
                 SetMaSoIfInvalid();
                 MessageBox.Show("Thêm Môn Học thành công");
             }
@@ -107,6 +106,17 @@ namespace ViewModels
 
             LoadDanhMucLoaiMon();
             LoadDanhMucMonHoc();
+        }
+
+        public void CalculateSoTinChi()
+        {
+            int soTietCho1TinChi = loaiMon.SoTietCho1TinChi;
+            int soTiet = monHoc.SoTiet;
+            int soTinChi = soTiet / soTietCho1TinChi;
+            soTiet = soTinChi * soTietCho1TinChi;
+            monHoc.SoTiet = soTiet;
+            monHoc.SoTinChi = soTinChi;
+            OnPropertyChanged("MonHoc");
         }
 
         private void LoadDanhMucLoaiMon()
