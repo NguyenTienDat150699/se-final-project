@@ -28,6 +28,7 @@ namespace ViewModels
                 OnPropertyChanged("DsMonHocMo");
             }
         }
+        public DataRowView SelectedRow { get; set; }
 
         public ICommand XacNhan { get; set; }
         private void XacNhanLuuDsMonHocMo()
@@ -45,7 +46,7 @@ namespace ViewModels
             {
                 MonHocMo monHocMo = new MonHocMo();
                 int number;
-                if (int.TryParse(row["MonHoc"].ToString(), out number))
+                if (!int.TryParse(row["MonHoc"].ToString(), out number))
                     continue;
                 monHocMo.MonHoc = number;
                 monHocMos.Add(monHocMo);
@@ -76,12 +77,39 @@ namespace ViewModels
 
         public ICommand NhapLai { get; set; }
 
+        public ICommand ThemDong { get; set; }
+        private void ThemDongMonHocMo()
+        {
+            DataRow dataRow = DanhMucMonHocMo.NewRow();
+            DanhMucMonHocMo.Rows.Add(dataRow);
+        }
+
+        public ICommand SelectedMonHocChanged { get; set; }
+        private void OnSelectedMonHocChanged(object mamonhoc)
+        {
+            if (mamonhoc == null) return;
+            DataRow dataRow = SelectedRow.Row;
+            foreach (MonHoc monHoc in DanhMucMonHoc)
+            {
+                if (monHoc.MaMonHoc != int.Parse(mamonhoc.ToString()))
+                    continue;
+                dataRow["MonHoc"] = mamonhoc;
+                dataRow["LoaiMon"] = monHoc.LoaiMon;
+                dataRow["SoTinChi"] = monHoc.SoTinChi;
+            }
+        }
+
         public MonHocMoViewModel() : base()
         {
+            dsMonHocMo = new DsMonHocMo();
             XacNhan = new RelayCommand(
                 param => true, param => XacNhanLuuDsMonHocMo());
             NhapLai = new RelayCommand(
                 param => true, param => LoadDanhMucMonHocMo());
+            ThemDong = new RelayCommand(
+                param => DanhMucMonHocMo != null, param => ThemDongMonHocMo());
+            SelectedMonHocChanged = new RelayCommand(
+                param => true, param => OnSelectedMonHocChanged(param));
 
             LoadDanhMucHocKy();
             LoadDanhMucLoaiMon();
@@ -105,10 +133,16 @@ namespace ViewModels
         }
         private void LoadDanhMucMonHocMo()
         {
+            if (dsMonHocMo.HocKy == 0)
+            {
+                MessageBox.Show("\nHọc Kỳ không hợp lệ", "ERROR");
+                return;
+            }
             DsMonHocMoDAL dsMonHocMoDAL = new DsMonHocMoDAL(dbConnection);
             if (!dsMonHocMoDAL.IsExistedByHocKyAndNamHoc(dsMonHocMo))
                 dsMonHocMoDAL.CreateItemByHocKyAndNamHoc(dsMonHocMo);
             dsMonHocMo = dsMonHocMoDAL.ReadItemByHocKyAndNamHoc(dsMonHocMo);
+            OnPropertyChanged("DsMonHocMo");
             MonHocMoDAL monHocMoDAL = new MonHocMoDAL(dbConnection);
             DanhMucMonHocMo = monHocMoDAL.ReadItemsByDsDataTable(dsMonHocMo.MaDsMonHocMo);
             OnPropertyChanged("DanhMucMonHocMo");

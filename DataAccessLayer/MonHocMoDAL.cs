@@ -68,10 +68,10 @@ namespace DataAccessLayer
                 if (connection.State != ConnectionState.Open)
                     connection.Open();
                 OleDbCommand command = new OleDbCommand(
-                    "SELECT MonHoc, LoaiMon, SoTinChi" +
-                    "FROM MO_HOC_MO, MON_HOC " +
+                    "SELECT MonHoc, LoaiMon, SoTinChi " +
+                    "FROM MON_HOC_MO, MON_HOC " +
                     "WHERE DsMonHocMo=@mads AND MaMonHoc=MonHoc " +
-                    "ORDER BY HocKy ASC, MonHoc ASC", connection);
+                    "ORDER BY MonHoc ASC", connection);
                 command.Parameters.Add("@mads", OleDbType.Numeric).Value = maDsMonHocMo;
                 OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
                 oleDbDataAdapter.Fill(dataTable);
