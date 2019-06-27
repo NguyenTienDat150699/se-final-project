@@ -131,9 +131,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Xác Nhận" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Content="Nhập Lại" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Thêm Dòng" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Xác Nhận" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Nhập Lại" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
         <DataGrid Grid.Row="2" Margin="10,0">
             <DataGrid.Resources>
