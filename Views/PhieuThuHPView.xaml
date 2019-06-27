@@ -5,19 +5,96 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             MinHeight="180" MaxHeight="180" MinWidth="900" MaxWidth="1100">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="15,15,15,0"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="44,32,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <DatePicker HorizontalAlignment="Left" Margin="257,32,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="44,88,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox HorizontalAlignment="Left" Margin="257,88,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="462,88,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="44,152,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="257,152,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="44,211,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="257,211,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="311,302,0,0" VerticalAlignment="Top" Width="115" Height="40"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="499,302,0,0" VerticalAlignment="Top" Width="115" Height="40"/>
-
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Height" Value="23"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="275"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel>
+            <StackPanel>
+                <TextBlock Text="Số Phiếu"/>
+                <TextBlock Text="Số Phiếu ĐKHP"/>
+                <TextBlock Text="Ngày Lập"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox PreviewTextInput="TextBox_PreviewTextInput"/>
+                <ComboBox/>
+                <DatePicker IsEnabled="False"/>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="1">
+            <StackPanel>
+                <TextBlock Text="MSSV"/>
+                <TextBlock Text="Học Kỳ"/>
+                <TextBlock Text="Số Tiền Thu"/>
+            </StackPanel>
+            <StackPanel>
+                <ComboBox/>
+                <ComboBox IsEnabled="False"/>
+                <TextBox PreviewTextInput="TextBox_PreviewTextInput"/>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="2">
+            <Grid DockPanel.Dock="Bottom" Margin="0,0,0,15">
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="100"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="FontWeight" Value="DemiBold"/>
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Xác Nhận" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Button Content="Nhập Lại" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </Grid>
+            <StackPanel>
+                <TextBlock Text="Họ Tên"/>
+                <TextBlock Text="Năm Học"/>
+                <TextBlock Text="Số Tiền Còn Lại"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox IsReadOnly="True"/>
+                <TextBox IsReadOnly="True"/>
+                <TextBox IsReadOnly="True"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </UserControl>
