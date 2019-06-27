@@ -5,8 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="900"
+        MinHeight="500" MinWidth="800">
+    <Window.Resources>
+        <Style TargetType="TabItem">
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Nhập Sinh Viên" Width="150">
+                <local:SinhVienView VerticalAlignment="Top"/>
+            </TabItem>
+            <TabItem Header="Đào Tạo">
+                <TabControl>
+                    <TabItem Header="Danh Sách Môn Học" Width="200">
+                        <local:MonHocView/>
+                    </TabItem>
+                    <TabItem Header="Chương Trình Học" Width="175">
+                        <local:ChuongTrinhHocView/>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Đăng Ký Học Phần" Width="175">
+                <TabControl>
+                    <TabItem Header="Nhập Môn Học Mở" Width="175">
+                        <local:MonHocMoView/>
+                    </TabItem>
+                    <TabItem Header="Lập Phiếu ĐKHP" Width="175">
+                        <local:PhieuDKHPView/>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Học Phí">
+                <TabControl>
+                    <TabItem Header="Lập Phiếu ĐKHP" Width="175">
+                        <local:PhieuThuHPView VerticalAlignment="Top"/>
+                    </TabItem>
+                    <TabItem Header="Lập Báo Cáo Sinh Viên" Width="200">
+                        <local:BaoCaoSinhVienView/>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
