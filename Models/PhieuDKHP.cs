@@ -12,6 +12,7 @@ namespace Models
         {
             NgayLap = DateTime.Today;
             ThoiHangDongHP = DateTime.Today;
+            NamHoc = 2000;
             SoTienConLai = 0;
             SoTienDangKy = 0;
             SoTienPhaiDong = 0;

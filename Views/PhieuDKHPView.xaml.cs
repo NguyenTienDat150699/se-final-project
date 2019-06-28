@@ -30,5 +30,15 @@ namespace Views
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double TiLeMienGiam;
+            TextBox source = e.Source as TextBox;
+            if(double.TryParse(source.Text, out TiLeMienGiam))
+            {
+                source.Text = TiLeMienGiam.ToString("0%");
+            }
+        }
     }
 }

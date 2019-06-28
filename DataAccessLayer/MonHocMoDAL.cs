@@ -102,6 +102,9 @@ namespace DataAccessLayer
                     "AND HocKy=@hocky AND NamHoc=@namhoc " +
                     "ORDER BY MaMonHoc ASC", connection);
                 OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
+                command.Parameters.Add("@hocky", OleDbType.Numeric).Value = hocKy;
+                command.Parameters.Add("@namhoc", OleDbType.Numeric).Value = namHoc;
+
                 oleDbDataAdapter.Fill(dataTable);
             }
             catch (Exception ex)

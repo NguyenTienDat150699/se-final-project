@@ -48,6 +48,7 @@ namespace ViewModels
                 OnPropertyChanged("DoiTuongUuTien");
             }
         }
+        public DataRowView SelectedRow { get; set; }
         
         public ICommand XacNhan { get; set; }
         private void XacNhanLuuPhieuDKHP()
@@ -111,7 +112,7 @@ namespace ViewModels
         private void SetMaSoIfInvalid()
         {
             PhieuDKHP_DAL phieuDKHP_DAL = new PhieuDKHP_DAL(dbConnection);
-            while (!phieuDKHP_DAL.IsMaSoExisted(phieuDKHP.SoPhieuDKHP))
+            while (phieuDKHP_DAL.IsMaSoExisted(phieuDKHP.SoPhieuDKHP))
                 phieuDKHP.SoPhieuDKHP++;
             OnPropertyChanged("PhieuDKHP");
         }
@@ -123,11 +124,37 @@ namespace ViewModels
             SinhVien = new SinhVien();
             DoiTuongUuTien = new DoiTuongUuTien();
             LoadDanhMucMHM();
-            NewCtPhieuDKHPs();
+        }
+
+        public ICommand ThemDong { get; set; }
+        private void ThemDongMonHocMo()
+        {
+            DataRow dataRow = CT_PhieuDKHPs.NewRow();
+            CT_PhieuDKHPs.Rows.Add(dataRow);
+        }
+
+        public ICommand SelectedMonHocChanged { get; set; }
+        private void OnSelectedMonHocChanged(object mamonhoc)
+        {
+            if (mamonhoc == null) return;
+            DataRow dataRow = SelectedRow.Row;
+            foreach (MonHoc monHoc in DanhMucMHM)
+                if (monHoc.MaMonHoc == int.Parse(mamonhoc.ToString()))
+                {
+                    dataRow["MonHoc"] = mamonhoc;
+                    dataRow["LoaiMon"] = monHoc.LoaiMon;
+                    dataRow["SoTinChi"] = monHoc.SoTinChi;
+                    foreach (LoaiMon loaiMon in DanhMucLoaiMon)
+                        if (loaiMon.MaLoaiMon == monHoc.LoaiMon)
+                            dataRow["SoTien"] = loaiMon.SoTienCho1TinChi * monHoc.SoTinChi;
+                    break;
+                }
+            CalculateSoTien();
         }
 
         public void CalculateSoTien()
         {
+            if (CT_PhieuDKHPs == null) return;
             phieuDKHP.SoTienDangKy = 0;
             foreach (DataRow row in CT_PhieuDKHPs.Rows)
             {
@@ -136,7 +163,7 @@ namespace ViewModels
                     continue;
                 phieuDKHP.SoTienDangKy += soTien;
             }
-            phieuDKHP.SoTienPhaiDong = phieuDKHP.SoTienDangKy * doiTuongUuTien.TiLeMienGiam;
+            phieuDKHP.SoTienPhaiDong = phieuDKHP.SoTienDangKy * (1.0 - doiTuongUuTien.TiLeMienGiam);
             phieuDKHP.SoTienConLai = phieuDKHP.SoTienPhaiDong;
             OnPropertyChanged("PhieuDKHP");
         }
@@ -145,17 +172,23 @@ namespace ViewModels
         {
             phieuDKHP = new PhieuDKHP();
             sinhVien = new SinhVien();
+            sinhVien.MaSo = -1;
             doiTuongUuTien = new DoiTuongUuTien();
 
             XacNhan = new RelayCommand(
                 param => true, param => XacNhanLuuPhieuDKHP());
             NhapLai = new RelayCommand(
                 param => true, param => NhapLaiThongTinPhieuDKHP());
+            ThemDong = new RelayCommand(
+                param => CT_PhieuDKHPs != null, param => ThemDongMonHocMo());
+            SelectedMonHocChanged = new RelayCommand(
+                param => true, param => OnSelectedMonHocChanged(param));
 
             LoadDanhMucSinhVien();
             LoadDanhMucHocKy();
             LoadDanhMucDTUT();
             LoadDanhMucNganhHoc();
+            LoadDanhMucLoaiMon();
         }
 
         private void LoadDanhMucSinhVien()
@@ -183,7 +216,7 @@ namespace ViewModels
             LoaiMonDAL loaimonDAL = new LoaiMonDAL(dbConnection);
             DanhMucLoaiMon = loaimonDAL.ReadAllItems();
         }
-        private void LoadDanhMucMHM()
+        public void LoadDanhMucMHM()
         {
             MonHocMoDAL monHocMoDAL = new MonHocMoDAL(dbConnection);
             DanhMucMHM = monHocMoDAL.ReadMonHocsByHocKyAndNamHoc(phieuDKHP.HocKy, phieuDKHP.NamHoc);
@@ -198,6 +231,7 @@ namespace ViewModels
             CT_PhieuDKHPs.Columns.Add("SoTinChi");
             CT_PhieuDKHPs.Columns.Add("SoTien");
             OnPropertyChanged("CT_PhieuDKHPs");
+            CalculateSoTien();
         }
 
         public List<SinhVien> DanhMucSinhVien { get; set; }
