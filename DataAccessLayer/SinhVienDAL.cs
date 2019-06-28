@@ -69,5 +69,42 @@ namespace DataAccessLayer
             }
             return int.Parse(dataTable.Rows[0][0].ToString()) == 0 ? false : true;
         }
+
+        public List<SinhVien> ReadAllItems()
+        {
+            List<SinhVien> sinhViens = new List<SinhVien>();
+            DataTable dataTable = new DataTable();
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                OleDbCommand command = new OleDbCommand(
+                    "SELECT * FROM SINH_VIEN ORDER BY MaSo ASC", connection);
+                OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
+                oleDbDataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            foreach (DataRow row in dataTable.Rows)
+            {
+                SinhVien sinhVien = new SinhVien();
+                sinhVien.MaSo = int.Parse(row["MaSo"].ToString());
+                sinhVien.HoTen = row["HoTen"].ToString();
+                sinhVien.NgaySinh = DateTime.Parse(row["NgaySinh"].ToString());
+                sinhVien.GioiTinh = bool.Parse(row["GioiTinh"].ToString());
+                sinhVien.DiaChi = row["DiaChi"].ToString();
+                sinhVien.QueQuan = int.Parse(row["QueQuan"].ToString());
+                sinhVien.DoiTuong = int.Parse(row["DoiTuong"].ToString());
+                sinhVien.NganhHoc = int.Parse(row["NganhHoc"].ToString());
+                sinhViens.Add(sinhVien);
+            }
+            return sinhViens;
+        }
     }
 }

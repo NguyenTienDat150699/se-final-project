@@ -86,5 +86,43 @@ namespace DataAccessLayer
             }
             return dataTable;
         }
+
+        public List<MonHoc> ReadMonHocsByHocKyAndNamHoc(int hocKy, int namHoc)
+        {
+            List<MonHoc> monHocs = new List<MonHoc>();
+            DataTable dataTable = new DataTable();
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                OleDbCommand command = new OleDbCommand(
+                    "SELECT MaMonHoc, TenMonHoc, LoaiMon, SoTiet, SoTinChi " +
+                    "FROM MON_HOC, MON_HOC_MO, DS_MON_HOC_MO " +
+                    "WHERE MaMonHoc=MonHoc AND MaDsMonHocMo=DsMonHocMo " +
+                    "AND HocKy=@hocky AND NamHoc=@namhoc " +
+                    "ORDER BY MaMonHoc ASC", connection);
+                OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
+                oleDbDataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            foreach (DataRow row in dataTable.Rows)
+            {
+                MonHoc monHoc = new MonHoc();
+                monHoc.MaMonHoc = int.Parse(row["MaMonHoc"].ToString());
+                monHoc.TenMonHoc = row["TenMonHoc"].ToString();
+                monHoc.LoaiMon = int.Parse(row["LoaiMon"].ToString());
+                monHoc.SoTiet = int.Parse(row["SoTiet"].ToString());
+                monHoc.SoTinChi = int.Parse(row["SoTinChi"].ToString());
+                monHocs.Add(monHoc);
+            }
+            return monHocs;
+        }
     }
 }
