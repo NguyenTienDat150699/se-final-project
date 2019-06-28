@@ -58,8 +58,10 @@ namespace ViewModels
                 PhieuThuHP_DAL phieuThuHP_DAL = new PhieuThuHP_DAL(dbConnection);
                 PhieuDKHP_DAL phieuDKHP_DAL = new PhieuDKHP_DAL(dbConnection);
                 phieuThuHP_DAL.CreateItem(phieuThuHP);
-                phieuDKHP_DAL.UpdateItem(phieuDKHP);
+                phieuDKHP_DAL.UpdateSoTienConLai(phieuDKHP);
                 MessageBox.Show("Lưu Phiếu Thu Học Phí thành công");
+                NhapLaiThongTinPhieuThuHP();
+                SetMaSoIfInvalid();
             }
             else
                 MessageBox.Show(errorString, "ERROR");
@@ -71,7 +73,7 @@ namespace ViewModels
             PhieuDKHP_DAL phieuDKHP_DAL = new PhieuDKHP_DAL(dbConnection);
             if (!phieuDKHP_DAL.IsMaSoExisted(phieuThuHP.PhieuDKHP))
                 invalidProperties += "\nPhiếu ĐKHP không hợp hệ";
-            if (phieuThuHP.SoTienThu == 0 && phieuDKHP.SoTienConLai < 0)
+            if (phieuThuHP.SoTienThu == 0 || phieuDKHP.SoTienConLai < 0)
                 invalidProperties += "\nSố Tiền Thu không hợp hệ";
             return invalidProperties;
         }
@@ -86,9 +88,10 @@ namespace ViewModels
         public ICommand NhapLai { get; set; }
         private void NhapLaiThongTinPhieuThuHP()
         {
-            PhieuThuHP = new PhieuThuHP();
             PhieuDKHP = new PhieuDKHP();
+            phieuDKHP.SoPhieuDKHP = -1;
             SinhVien = new SinhVien();
+            PhieuThuHP = new PhieuThuHP();
         }
 
         public void CalculateSoTien()
@@ -100,6 +103,7 @@ namespace ViewModels
         public PhieuThuHpViewModel() : base()
         {
             phieuDKHP = new PhieuDKHP();
+            phieuDKHP.SoPhieuDKHP = -1;
             sinhVien = new SinhVien();
             phieuThuHP = new PhieuThuHP();
 
@@ -122,7 +126,7 @@ namespace ViewModels
             SinhVienDAL sinhVienDAL = new SinhVienDAL(dbConnection);
             DanhMucSinhVien = sinhVienDAL.ReadAllItems();
         }
-        private void LoadDanhMucPhieuDKHP()
+        public void LoadDanhMucPhieuDKHP()
         {
             PhieuDKHP_DAL phieuDKHP_DAL = new PhieuDKHP_DAL(dbConnection);
             DanhMucPhieuDKHP = phieuDKHP_DAL.ReadItemsByMSSV(sinhVien.MaSo);
@@ -130,7 +134,7 @@ namespace ViewModels
         }
 
         public List<HocKy> DanhMucHocKy { get; set; }
-        List<SinhVien> DanhMucSinhVien { get; set; }
-        List<PhieuDKHP> DanhMucPhieuDKHP { get; set; }
+        public List<SinhVien> DanhMucSinhVien { get; set; }
+        public List<PhieuDKHP> DanhMucPhieuDKHP { get; set; }
     }
 }

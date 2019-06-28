@@ -50,7 +50,7 @@ namespace DataAccessLayer
                 if (connection.State != ConnectionState.Open)
                     connection.Open();
                 OleDbCommand command = new OleDbCommand(
-                    "SELECT COUNT(SoPhieuDKHP) FROM PHIEU_THUHP WHERE SoPhieuDKHP=@maso", connection);
+                    "SELECT COUNT(SoPhieuThuHP) FROM PHIEU_THUHP WHERE SoPhieuThuHP=@maso", connection);
                 command.Parameters.Add("@maso", OleDbType.Numeric).Value = soPhieuThuHP;
                 OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
                 oleDbDataAdapter.Fill(dataTable);

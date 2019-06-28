@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:vm="clr-namespace:ViewModels;assembly=ViewModels"
              xmlns:local="clr-namespace:Views"
              mc:Ignorable="d" 
              MinHeight="180" MaxHeight="180" MinWidth="900" MaxWidth="1100">
     <UserControl.Resources>
+        <vm:PhieuThuHpViewModel x:Key="VM"/>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="15,15,15,0"/>
@@ -20,7 +24,7 @@
             <Setter Property="Height" Value="25"/>
         </Style>
         <Style TargetType="ComboBox">
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="Thin"/>
             <Setter Property="Margin" Value="15,15,15,0"/>
             <Setter Property="Height" Value="25"/>
@@ -51,9 +55,19 @@
                 <TextBlock Text="Ngày Lập"/>
             </StackPanel>
             <StackPanel>
-                <TextBox PreviewTextInput="TextBox_PreviewTextInput"/>
-                <ComboBox/>
-                <DatePicker IsEnabled="False"/>
+                <TextBox PreviewTextInput="TextBox_PreviewTextInput"
+                         Text="{Binding Source={StaticResource VM}, Path=PhieuThuHP.SoPhieuThuHP}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource VM}, Path=DanhMucPhieuDKHP}"
+                          DisplayMemberPath="SoPhieuDKHP" SelectedValuePath="SoPhieuDKHP"
+                          SelectedItem="{Binding Source={StaticResource VM}, Path=PhieuDKHP}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ei:CallMethodAction TargetObject="{Binding Source={StaticResource VM}}" MethodName="CalculateSoTien"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <DatePicker IsEnabled="False" SelectedDateFormat="Long"
+                            SelectedDate="{Binding Source={StaticResource VM}, Path=PhieuThuHP.NgayLap}"/>
             </StackPanel>
         </DockPanel>
         <DockPanel Grid.Column="1">
@@ -63,9 +77,27 @@
                 <TextBlock Text="Số Tiền Thu"/>
             </StackPanel>
             <StackPanel>
-                <ComboBox/>
-                <ComboBox IsEnabled="False"/>
-                <TextBox PreviewTextInput="TextBox_PreviewTextInput"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource VM}, Path=DanhMucSinhVien}"
+                          DisplayMemberPath="MaSo" SelectedValuePath="MaSo"
+                          SelectedItem="{Binding Source={StaticResource VM}, Path=SinhVien}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ei:CallMethodAction TargetObject="{Binding Source={StaticResource VM}}" MethodName="LoadDanhMucPhieuDKHP"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <ComboBox IsEnabled="False"
+                          ItemsSource="{Binding Source={StaticResource VM}, Path=DanhMucHocKy}"
+                          DisplayMemberPath="TenHocKy" SelectedValuePath="MaHocKy"
+                          SelectedValue="{Binding Source={StaticResource VM}, Path=PhieuDKHP.HocKy}"/>
+                <TextBox PreviewTextInput="TextBox_PreviewTextInput"
+                         Text="{Binding Source={StaticResource VM}, Path=PhieuThuHP.SoTienThu}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="LostFocus">
+                            <ei:CallMethodAction TargetObject="{Binding Source={StaticResource VM}}" MethodName="CalculateSoTien"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
             </StackPanel>
         </DockPanel>
         <DockPanel Grid.Column="2">
@@ -82,8 +114,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Xác Nhận" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button Content="Nhập Lại" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <Button Content="Xác Nhận" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"
+                        Command="{Binding Source={StaticResource VM}, Path=XacNhan}"/>
+                <Button Content="Nhập Lại" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                        Command="{Binding Source={StaticResource VM}, Path=NhapLai}"/>
             </Grid>
             <StackPanel>
                 <TextBlock Text="Họ Tên"/>
@@ -91,9 +125,9 @@
                 <TextBlock Text="Số Tiền Còn Lại"/>
             </StackPanel>
             <StackPanel>
-                <TextBox IsReadOnly="True"/>
-                <TextBox IsReadOnly="True"/>
-                <TextBox IsReadOnly="True"/>
+                <TextBox IsReadOnly="True" Text="{Binding Source={StaticResource VM}, Path=SinhVien.HoTen}"/>
+                <TextBox IsReadOnly="True" Text="{Binding Source={StaticResource VM}, Path=PhieuDKHP.NamHoc}"/>
+                <TextBox IsReadOnly="True" Text="{Binding Source={StaticResource VM}, Path=PhieuDKHP.SoTienConLai}"/>
             </StackPanel>
         </DockPanel>
     </Grid>

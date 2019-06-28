@@ -48,28 +48,17 @@ namespace DataAccessLayer
             }
         }
 
-        public void UpdateItem(PhieuDKHP phieuDKHP)
+        public void UpdateSoTienConLai(PhieuDKHP phieuDKHP)
         {
             try
             {
                 if (connection.State != ConnectionState.Open)
                     connection.Open();
                 OleDbCommand command = new OleDbCommand(
-                    "UPDATE PHIEU_DKHP SET " +
-                    "NgayLap=@ngaylap, HocKy=@hocky, NamHoc=@namhoc, MaSoSV=@mssv, " +
-                    "SoTienDangKy=@sotiendk, ThoiHanDongHP=@thoihan, " +
-                    "SoTienPhaiDong=@sotienpd, SoTienConLai=@sotiencl " +
-                    "WHERE SoPhieuDKHP=@sophieu",
+                    "UPDATE PHIEU_DKHP SET SoTienConLai=@sotiencl WHERE SoPhieuDKHP=@maso",
                     connection);
-                command.Parameters.Add("@sophieu", OleDbType.Numeric).Value = phieuDKHP.SoPhieuDKHP;
-                command.Parameters.Add("@ngaylap", OleDbType.Date).Value = phieuDKHP.NgayLap;
-                command.Parameters.Add("@hocky", OleDbType.Numeric).Value = phieuDKHP.HocKy;
-                command.Parameters.Add("@namhoc", OleDbType.Numeric).Value = phieuDKHP.NamHoc;
-                command.Parameters.Add("@mssv", OleDbType.Numeric).Value = phieuDKHP.MaSoSV;
-                command.Parameters.Add("@sotiendk", OleDbType.Currency).Value = phieuDKHP.SoTienDangKy;
-                command.Parameters.Add("@thoihan", OleDbType.Date).Value = phieuDKHP.ThoiHangDongHP;
-                command.Parameters.Add("@sotienpd", OleDbType.Currency).Value = phieuDKHP.SoTienPhaiDong;
-                command.Parameters.Add("@sotiencl", OleDbType.Currency).Value = phieuDKHP.SoTienConLai;
+                command.Parameters.Add("@sotiencl", OleDbType.Numeric).Value = phieuDKHP.SoTienConLai;
+                command.Parameters.Add("@maso", OleDbType.Currency).Value = phieuDKHP.SoPhieuDKHP;
 
                 command.ExecuteNonQuery();
             }
@@ -144,7 +133,7 @@ namespace DataAccessLayer
                 phieuDKHP.SoTienConLai = double.Parse(row["SoTienConLai"].ToString());
                 phieuDKHPs.Add(phieuDKHP);
             }
-            return phieuDKHPs
+            return phieuDKHPs;
         }
     }
 }

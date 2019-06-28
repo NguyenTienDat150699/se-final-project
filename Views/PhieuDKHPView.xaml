@@ -113,7 +113,7 @@
                     <TextBox PreviewTextInput="TextBox_PreviewTextInput"
                              Text="{Binding Source={StaticResource VM}, Path=PhieuDKHP.NamHoc}">
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="TextChanged">
+                            <i:EventTrigger EventName="LostFocus">
                                 <ei:CallMethodAction TargetObject="{Binding Source={StaticResource VM}}"
                                                      MethodName="LoadDanhMucMHM"/>
                             </i:EventTrigger>
