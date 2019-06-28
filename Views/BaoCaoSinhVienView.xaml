@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:vm="clr-namespace:ViewModels;assembly=ViewModels"
              xmlns:local="clr-namespace:Views"
              mc:Ignorable="d" 
              MinHeight="200" MinWidth="700" MaxWidth="700">
     <UserControl.Resources>
+        <vm:BaoCaoNghiaVuHpViewModel x:Key="VM"/>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="15,15,15,0"/>
@@ -47,7 +51,16 @@
                 <TextBlock Text="Học Kỳ"/>
             </StackPanel>
             <StackPanel>
-                <ComboBox/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource VM}, Path=DanhMucHocKy}"
+                          DisplayMemberPath="TenHocKy" SelectedValuePath="MaHocKy"
+                          SelectedItem="{Binding Source={StaticResource VM}, Path=HocKy}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ei:CallMethodAction TargetObject="{Binding Source={StaticResource VM}}"
+                                                 MethodName="LoadBangBaoCao"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </StackPanel>
         </DockPanel>
         <DockPanel Grid.Column="2">
@@ -55,16 +68,26 @@
                 <TextBlock Text="Năm Học"/>
             </StackPanel>
             <StackPanel>
-                <TextBox PreviewTextInput="TextBox_PreviewTextInput"/>
+                <TextBox PreviewTextInput="TextBox_PreviewTextInput"
+                         Text="{Binding Source={StaticResource VM}, Path=NamHoc}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="LostFocus">
+                            <ei:CallMethodAction TargetObject="{Binding Source={StaticResource VM}}"
+                                                     MethodName="LoadBangBaoCao"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
             </StackPanel>
         </DockPanel>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" Margin="10,0,10,10" IsReadOnly="True">
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" Margin="10,0,10,10" IsReadOnly="True" AutoGenerateColumns="False"
+                  FontWeight="Thin" FontSize="14"
+                  ItemsSource="{Binding Source={StaticResource VM}, Path=BangBaoCao}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã Số Sinh Viên"/>
-                <DataGridTextColumn Header="Họ Tên Sinh Viên"/>
-                <DataGridTextColumn Header="Số Tiền Đăng Ký"/>
-                <DataGridTextColumn Header="Số Tiền Phải Đóng"/>
-                <DataGridTextColumn Header="Số Tiền Còn Lại"/>
+                <DataGridTextColumn Header="Mã Số Sinh Viên" Binding="{Binding MaSo}"/>
+                <DataGridTextColumn Header="Họ Tên Sinh Viên" Binding="{Binding HoTen}"/>
+                <DataGridTextColumn Header="Số Tiền Đăng Ký" Binding="{Binding SoTienDangKy}"/>
+                <DataGridTextColumn Header="Số Tiền Phải Đóng" Binding="{Binding SoTienPhaiDong}"/>
+                <DataGridTextColumn Header="Số Tiền Còn Lại" Binding="{Binding SoTienConLai}"/>
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Margin="0" Grid.Row="1" TextWrapping="Wrap" Grid.ColumnSpan="4" Height="Auto" FontSize="24" HorizontalAlignment="Center"><Run Text="DANH SÁCH SINH VIÊN CHƯA HOÀN THÀNH "/><Run Text="HỌC "/><Run Text="PHÍ"/><LineBreak/><Run/></TextBlock>

@@ -57,8 +57,8 @@ namespace DataAccessLayer
                     connection.Open();
                 OleDbCommand command = new OleDbCommand(
                     "SELECT MaSo, HoTen, SoTienDangKy, SoTienPhaiDong, SoTienConLai " +
-                    "FROM SINH_VIEN, PHIEU_DKHP" +
-                    "WHERE MaSo=MaSoSV AND HocKy=@hocky AND NamHoc=@namhoc" +
+                    "FROM SINH_VIEN, PHIEU_DKHP " +
+                    "WHERE MaSo=MaSoSV AND HocKy=@hocky AND NamHoc=@namhoc AND SoTienConLai>0 " +
                     "ORDER BY MaSo ASC, HoTen ASC", connection);
                 command.Parameters.Add("@hocky", OleDbType.Numeric).Value = maHocKy;
                 command.Parameters.Add("@namhoc", OleDbType.Numeric).Value = namHoc;
