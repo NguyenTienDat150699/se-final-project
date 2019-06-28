@@ -47,6 +47,34 @@ namespace DataAccessLayer
                 connection.Close();
             }
         }
+        
+        public DataTable BaoCaoSinhVienChuaHoanThanhHP(int maHocKy, int namHoc)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                OleDbCommand command = new OleDbCommand(
+                    "SELECT MaSo, HoTen, SoTienDangKy, SoTienPhaiDong, SoTienConLai " +
+                    "FROM SINH_VIEN, PHIEU_DKHP" +
+                    "WHERE MaSo=MaSoSV AND HocKy=@hocky AND NamHoc=@namhoc" +
+                    "ORDER BY MaSo ASC, HoTen ASC", connection);
+                command.Parameters.Add("@hocky", OleDbType.Numeric).Value = maHocKy;
+                command.Parameters.Add("@namhoc", OleDbType.Numeric).Value = namHoc;
+                OleDbDataAdapter oleDbDataAdapter = new OleDbDataAdapter(command);
+                oleDbDataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return dataTable;
+        }
 
         public void UpdateSoTienConLai(PhieuDKHP phieuDKHP)
         {
