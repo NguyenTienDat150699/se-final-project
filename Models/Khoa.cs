@@ -8,6 +8,10 @@ namespace Models
 {
     public class Khoa
     {
+        public Khoa()
+        {
+            TenKhoa = "";
+        }
         public int MaKhoa { get; set; }
         public string TenKhoa { get; set; }
     }

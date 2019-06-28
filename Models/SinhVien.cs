@@ -11,6 +11,8 @@ namespace Models
         public SinhVien()
         {
             NgaySinh = new DateTime(2000, 01, 01);
+            HoTen = "";
+            DiaChi = "";
         }
         public int MaSo { get; set; }
         public string HoTen { get; set; }

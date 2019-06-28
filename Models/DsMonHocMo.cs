@@ -8,6 +8,10 @@ namespace Models
 {
     public class DsMonHocMo
     {
+        public DsMonHocMo()
+        {
+            NamHoc = 2000;
+        }
         public int MaDsMonHocMo { get; set; }
         public int HocKy { get; set; }
         public int NamHoc { get; set; }

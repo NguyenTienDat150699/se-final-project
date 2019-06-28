@@ -10,7 +10,9 @@ namespace Models
     {
         public LoaiMon()
         {
+            TenLoaiMon = "";
             SoTietCho1TinChi = byte.MaxValue;
+            SoTienCho1TinChi = 0;
         }
         public int MaLoaiMon { get; set; }
         public string TenLoaiMon { get; set; }

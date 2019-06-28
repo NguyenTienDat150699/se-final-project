@@ -8,6 +8,10 @@ namespace Models
 {
     public class HocKy
     {
+        public HocKy()
+        {
+            TenHocKy = "";
+        }
         public int MaHocKy { get; set; }
         public string TenHocKy { get; set; }
     }
